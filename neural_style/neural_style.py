@@ -91,9 +91,6 @@ def train(args):
             stylization_vector = torch.zeros(4).to(device)
             stylization_vector[batch_id % 4] = 1
 
-            if(batch_id % 1000 == 0):
-                print(stylization_vector)
-
             c_values = conditioner(
                 torch.ones(n_batch, 4, 1, 1).to(device) * stylization_vector.unsqueeze(0).unsqueeze(2).unsqueeze(2))
 
