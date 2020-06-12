@@ -121,7 +121,7 @@ def train(args):
             optimizer.step()
 
             agg_content_loss += content_loss.item()
-            agg_style_loss += style_loss.item()
+            agg_style_loss += loss_ema.sum()
 
             if (batch_id + 1) % args.log_interval == 0:
                 mesg = "{}\tEpoch {}:\t[{}/{}]\tcontent: {:.6f}\tstyle: {:.6f}\ttotal: {:.6f}".format(

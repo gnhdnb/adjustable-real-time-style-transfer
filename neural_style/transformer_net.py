@@ -1,21 +1,28 @@
 import torch
 
+class ResidualDense(torch.nn.Module):
+    def __init__(self, in_channels, hidden_channels):
+        super(ResidualDense, self).__init__()
+        self.model = torch.nn.Sequential(
+            torch.nn.Conv2d(in_channels, hidden_channels, kernel_size = 1),
+            torch.nn.Tanh(),
+            torch.nn.Conv2d(hidden_channels, in_channels, kernel_size = 1),
+            torch.nn.Tanh()
+        )
+    
+    def forward(self, X):
+        return X - self.model(X)
+
 class ConditionerNet(torch.nn.Module):
     def __init__(self):
         super(ConditionerNet, self).__init__()
         self.model = torch.nn.Sequential(
             torch.nn.Conv2d(4, 1000, kernel_size = 1),
-            torch.nn.LeakyReLU(),
-            torch.nn.Conv2d(1000, 1000, kernel_size = 1),
-            torch.nn.LeakyReLU(),
-            torch.nn.Conv2d(1000, 1000, kernel_size = 1),
-            torch.nn.LeakyReLU(),
-            torch.nn.Conv2d(1000, 1000, kernel_size = 1),
-            torch.nn.LeakyReLU(),
-            torch.nn.Conv2d(1000, 1000, kernel_size = 1),
-            torch.nn.LeakyReLU(),
-            torch.nn.Conv2d(1000, 1000, kernel_size = 1),
-            torch.nn.LeakyReLU(),
+            torch.nn.Tanh(),
+            ResidualDense(1000, 1000),
+            ResidualDense(1000, 1000),
+            ResidualDense(1000, 1000),
+            ResidualDense(1000, 1000),
             torch.nn.Conv2d(1000, 4224, kernel_size = 1)
         )
     
