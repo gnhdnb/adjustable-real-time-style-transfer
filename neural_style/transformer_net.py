@@ -5,9 +5,9 @@ class ResidualDense(torch.nn.Module):
         super(ResidualDense, self).__init__()
         self.model = torch.nn.Sequential(
             torch.nn.Conv2d(in_channels, hidden_channels, kernel_size = 1),
-            torch.nn.Tanh(),
+            torch.nn.ReLU(),
             torch.nn.Conv2d(hidden_channels, in_channels, kernel_size = 1),
-            torch.nn.Tanh()
+            torch.nn.ReLU()
         )
     
     def forward(self, X):
@@ -18,7 +18,7 @@ class ConditionerNet(torch.nn.Module):
         super(ConditionerNet, self).__init__()
         self.model = torch.nn.Sequential(
             torch.nn.Conv2d(4, 1000, kernel_size = 1),
-            torch.nn.Tanh(),
+            torch.nn.ReLU(),
             ResidualDense(1000, 1000),
             ResidualDense(1000, 1000),
             ResidualDense(1000, 1000),

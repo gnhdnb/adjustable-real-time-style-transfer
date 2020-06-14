@@ -88,8 +88,11 @@ def train(args):
 
             x = x.to(device)
 
-            stylization_vector = torch.zeros(4).to(device)
-            stylization_vector[batch_id % 4] = 1
+            if (torch.rand(1).item() > 0.5):
+                stylization_vector = torch.rand(4).to(device)
+            else:
+                stylization_vector = torch.zeros(4).to(device)
+                stylization_vector[batch_id % 4] = 1
 
             c_values = conditioner(
                 torch.ones(n_batch, 4, 1, 1).to(device) * stylization_vector.unsqueeze(0).unsqueeze(2).unsqueeze(2))
