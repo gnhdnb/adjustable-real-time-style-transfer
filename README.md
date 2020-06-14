@@ -5,6 +5,6 @@ Pytorch implementation of the method described in [Adjustable Real-time Style Tr
 This implementation is based heavily on [pytorch style transfer example](https://github.com/pytorch/examples/tree/master/fast_neural_style)
 
 <p align="center">
-    <img src="images/content-images/plant.jpg" height="440px">
-    <img src="images/output-images/plant-mosaic.gif" height="440px">
+    <img src="images/content-images/amber.jpg" height="320px">
+    <img src="images/output-images/amber-mosaic.gif" height="320px">
 </p>
